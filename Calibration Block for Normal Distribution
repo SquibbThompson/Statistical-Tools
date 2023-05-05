@@ -1,0 +1,40 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# Get user input for mean and standard deviation
+mu = float(input("Enter the mean: "))
+sigma = float(input("Enter the standard deviation: "))
+
+# Define x-axis limits
+x_min = mu - 3*sigma
+x_max = mu + 3*sigma
+
+# Define x-values for the normal distribution
+x = np.linspace(x_min, x_max, 1000)
+
+# Calculate the corresponding y-values for the normal distribution
+y = norm.pdf(x, mu, sigma)
+
+# Create a figure with two subplots
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10,5))
+
+# Plot the normal distribution on the first subplot
+ax1.plot(x, y)
+ax1.set_xlim(x_min, x_max)
+ax1.set_ylim(0, 1)
+ax1.set_xlabel('x')
+ax1.set_ylabel('y')
+ax1.set_title(f"Normal Distribution (mean={mu}, std={sigma})")
+
+# Plot the histogram of random samples drawn from the normal distribution on the second subplot
+samples = np.random.normal(loc=mu, scale=sigma, size=1000)
+ax2.hist(samples, bins=30, density=True, alpha=0.5)
+ax2.set_xlim(x_min, x_max)
+ax2.set_ylim(0, 1)
+ax2.set_xlabel('x')
+ax2.set_ylabel('Frequency')
+ax2.set_title(f"Histogram of Random Samples (mean={samples.mean():.2f}, std={samples.std():.2f})")
+
+# Show the plot
+plt.show()
