@@ -1,0 +1,36 @@
+import numpy as np
+from scipy.stats import f
+
+# User inputs
+num_groups = int(input("Enter the number of groups: "))
+num_samples = int(input("Enter the number of samples per group: "))
+
+# Generate actual sample data as a matrix
+samples = np.zeros((num_groups, num_samples))
+for i in range(num_groups):
+    for j in range(num_samples):
+        samples[i][j] = float(input(f"Enter sample value for group {i+1}, sample {j+1}: "))
+
+# Compute means and total mean
+group_means = np.mean(samples, axis=1)
+total_mean = np.mean(samples)
+
+# Compute between-group sum of squares (SSB) and degrees of freedom (DFB)
+SSB = num_samples * np.sum((group_means - total_mean) ** 2)
+DFB = num_groups - 1
+
+# Compute within-group sum of squares (SSW) and degrees of freedom (DFW)
+SSW = np.sum((samples - group_means.reshape(-1, 1)) ** 2)
+DFW = num_groups * (num_samples - 1)
+
+# Compute F-statistic and p-value
+MSW = SSW / DFW
+MSB = SSB / DFB
+F = MSB / MSW
+p = 1 - f.cdf(F, DFB, DFW)
+
+# Print results
+print("F-statistic: ", F)
+print("p-value: ", p)
+print("Means within groups: ", group_means)
+print("Mean between groups: ", total_mean)
