@@ -1,0 +1,6 @@
+    Generates a random 7x7 array, flattens it into a 1D array, and separates the values based on even and odd positions. 
+        ***Please change test array as needed to fit real data
+    Creates x-axis values for both sets of positions and calculates the absolute differences between even and odd positions.
+    Computes the integral, maximum, minimum, and average distances between the two sets of points.
+    Plots the trendlines for even and odd positions, shades the area between them, and adds a legend displaying the calculated values.
+    Displays the plot with x and y-axis labels.
