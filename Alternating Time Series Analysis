@@ -1,0 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Rand test data. Change as needed to fit linear array
+# Create a 7x7 random array with values between 1 and 7
+data_2d = np.random.randint(1, 8, (7, 7))  # Change (7, 1) to (7, 7)
+data = data_2d.flatten()
+
+# Separate even and odd positional values
+even_positions = data[::2]
+odd_positions = data[1::2]
+
+# Make sure the two arrays have the same length
+if len(even_positions) > len(odd_positions):
+    even_positions = even_positions[:-1]
+
+# Create the x-axis values for even and odd positions
+x_even = np.arange(0, len(even_positions) * 2, 2)
+x_odd = np.arange(1, len(odd_positions) * 2, 2)
+
+# Calculate the absolute differences between the two trendlines
+diff = np.abs(even_positions - odd_positions)
+
+# Calculate the requested values
+integral = np.trapz(diff)
+max_distance = np.max(diff)
+min_distance = np.min(diff)
+avg_distance = np.mean(diff)
+
+# Plot the trendlines
+plt.plot(x_even, even_positions, label=f"Even positions", marker='o', linestyle='-')
+plt.plot(x_odd, odd_positions, label=f"Odd positions", marker='o', linestyle='-')
+
+# Shade the area between the trendlines
+plt.fill_between(x_even, even_positions, odd_positions, color='gray', alpha=0.3)
+
+# Add the legend with the requested values
+plt.legend(title=f"Integral: {integral:.2f}\nMax distance: {max_distance:.2f}\nMin distance: {min_distance:.2f}\nAvg distance: {avg_distance:.2f}")
+
+# Add labels
+plt.xlabel("Position")
+plt.ylabel("Value")
+
+# Display the plot
+plt.show()
